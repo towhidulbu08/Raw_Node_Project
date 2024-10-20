@@ -1,14 +1,38 @@
-const http = require("node:http");
+/*
+ * Title: Uptime Monitoring Application
+ * Description: A RESTFul API to monitor up or down time of user defined links
+ * Author: Towhidul Islam Tamim
+ * Date: 18/10/2024
+ *
+ */
 
-const hostname = "127.0.0.1";
-const port = 3000;
+//dependencies
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "text/plain");
-  res.end("Hello, World!\n");
-});
+const http = require("http");
+const { handleReqRes } = require("./helpers/handleReqRes");
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+// an object-module scaffolding
+
+const app = {};
+
+// configuration
+
+app.config = {
+  port: 3000,
+};
+
+// create server
+
+app.createServer = () => {
+  const server = http.createServer(app.handleReqRes);
+  server.listen(app.config.port, () => {
+    console.log(`Server is Running at Port Number ${app.config.port}`);
+  });
+};
+
+// handle Request ,Response
+app.handleReqRes = handleReqRes;
+
+//  Start The Server
+
+app.createServer();
